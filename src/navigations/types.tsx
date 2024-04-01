@@ -10,6 +10,9 @@ export type RootStackParamList = {
   Splash: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  HomeScreen: undefined;
+  AuthNavigation: undefined;
+  MainNavigation: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

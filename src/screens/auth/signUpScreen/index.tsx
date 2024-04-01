@@ -21,7 +21,7 @@ import validationSignInSchema from './validation';
 import DefaultButton from '../../../components/Buttons/defaultButton';
 import {RootStackParamList} from '../../../navigations/types';
 import PoppinsText from '../../../components/text';
-
+import {signup} from '../../../services/auth';
 interface StyledInputProps extends TextInputProps {
   formikProps: any;
   formikKey: string;
@@ -69,7 +69,8 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
         <Formik
           initialValues={{name: '', email: '', password: ''}}
           onSubmit={(values, actions) => {
-            Alert.alert(JSON.stringify(values));
+            signup(values.email, values.password);
+            // Alert.alert(JSON.stringify(values));
             setTimeout(() => {
               actions.setSubmitting(false);
             }, 100);

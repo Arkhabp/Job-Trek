@@ -22,6 +22,8 @@ import DefaultButton from '../../../components/Buttons/defaultButton';
 import {RootStackParamList} from '../../../navigations/types';
 import PoppinsText from '../../../components/text';
 
+import {login} from '../../../services/auth';
+
 interface StyledInputProps extends TextInputProps {
   formikProps: any;
   formikKey: string;
@@ -54,7 +56,21 @@ interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
 }
 
-const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
+const SignInScreen: React.FC<Props> = ({
+  navigation: {navigate, reset, replace},
+}) => {
+  const handleLogin = async (email: any, password: any) => {
+    try {
+      const user = await login(email, password);
+      if (user) {
+        replace('MainNavigation');
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle any errors here
+    }
+  };
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <Pressable onPress={Keyboard.dismiss}>
@@ -67,7 +83,8 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
         <Formik
           initialValues={{email: '', password: ''}}
           onSubmit={(values, actions) => {
-            Alert.alert(JSON.stringify(values));
+            handleLogin(values.email, values.password);
+            // Alert.alert(JSON.stringify(values));
             setTimeout(() => {
               actions.setSubmitting(false);
             }, 100);
