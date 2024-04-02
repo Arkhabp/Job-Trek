@@ -3,41 +3,50 @@ import {StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import AuthNavigation from './AuthNavigation';
-import Colors from '../constans/colors';
-import MainNavigation from './MainNavigation';
 
 import {RootState} from '../store';
+import {loginSuccess} from '../store/redux/action/auth';
+
+import Colors from '../constans/colors';
+
+import AuthNavigation from './AuthNavigation';
+import MainNavigation from './MainNavigation';
+import SplashScreen from '../screens/splash';
 
 const AppNavigation = () => {
-  const Stack = createNativeStackNavigator();
-  const user = useSelector((state: RootState) => state.auth);
+  const token = useSelector((state: RootState) => state?.auth?.signIn?.token);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [isLogin, setIsLogin] = useState(false);
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, [user]);
-
-  const checkLoginStatus = async () => {
+  // Fungsi untuk memeriksa status autentikasi saat aplikasi dimulai
+  const checkAuthStatus = async () => {
     try {
-      const userToken = await AsyncStorage.getItem('USER_TOKEN');
-      if (userToken) {
-        setIsLogin(true);
-      } else {
-        setIsLogin(false);
+      // Cek apakah token tersimpan di AsyncStorage
+      const storedToken = await AsyncStorage.getItem('@token');
+      if (storedToken) {
+        // Jika token tersimpan, simpan token di Redux state
+        dispatch(loginSuccess(storedToken));
       }
     } catch (error) {
-      console.error('Error checking login status:', error);
+      console.log('Error checking auth status:', error);
+    } finally {
+      // Setelah proses selesai, atur isLoading menjadi false
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    // Panggil fungsi checkAuthStatus saat komponen mount
+    checkAuthStatus();
+  }, []);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
   return (
     <NavigationContainer>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
-      {!isLogin ? <AuthNavigation /> : <MainNavigation />}
+      {!token ? <AuthNavigation /> : <MainNavigation />}
     </NavigationContainer>
   );
 };

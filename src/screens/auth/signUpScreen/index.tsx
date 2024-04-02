@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Colors from '../../../constans/colors';
 import Helper from '../../../helpers/helper';
@@ -21,7 +22,8 @@ import validationSignInSchema from './validation';
 import DefaultButton from '../../../components/Buttons/defaultButton';
 import {RootStackParamList} from '../../../navigations/types';
 import PoppinsText from '../../../components/text';
-import {signup} from '../../../services/auth';
+import {RootState} from '../../../store';
+import {handleSignup} from '../../../store/redux/action/auth';
 interface StyledInputProps extends TextInputProps {
   formikProps: any;
   formikKey: string;
@@ -55,6 +57,17 @@ interface Props {
 }
 
 const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state?.auth?.signUp);
+
+  const onSubmit = (values: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
+    const {email, password, name} = values;
+    dispatch(handleSignup(email, password, name));
+  };
   return (
     <SafeAreaView style={styles.wrapper}>
       <Pressable onPress={Keyboard.dismiss}>
@@ -68,20 +81,14 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
 
         <Formik
           initialValues={{name: '', email: '', password: ''}}
-          onSubmit={(values, actions) => {
-            signup(values.email, values.password);
-            // Alert.alert(JSON.stringify(values));
-            setTimeout(() => {
-              actions.setSubmitting(false);
-            }, 100);
-          }}
+          onSubmit={onSubmit}
           validationSchema={validationSignInSchema}>
           {formikProps => (
             <React.Fragment>
               <StyledInput
                 formikProps={formikProps}
                 formikKey="name"
-                placeholder="Name"
+                placeholder="Full name"
               />
               <StyledInput
                 formikProps={formikProps}
@@ -95,7 +102,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
                 secureTextEntry
               />
 
-              {formikProps.isSubmitting ? (
+              {state?.isLoading ? (
                 <ActivityIndicator />
               ) : (
                 <View style={{marginTop: Helper.normalize(22)}}>

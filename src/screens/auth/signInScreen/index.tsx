@@ -14,15 +14,17 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {RootStackParamList} from '../../../navigations/types';
+import {handleLogin} from '../../../store/redux/action/auth';
+import {RootState} from '../../../store';
 import Colors from '../../../constans/colors';
 import Helper from '../../../helpers/helper';
-import validationSignInSchema from './validation';
-import DefaultButton from '../../../components/Buttons/defaultButton';
-import {RootStackParamList} from '../../../navigations/types';
 import PoppinsText from '../../../components/text';
 
-import {login} from '../../../services/auth';
+import validationSignInSchema from './validation';
+import DefaultButton from '../../../components/Buttons/defaultButton';
 
 interface StyledInputProps extends TextInputProps {
   formikProps: any;
@@ -56,19 +58,13 @@ interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
 }
 
-const SignInScreen: React.FC<Props> = ({
-  navigation: {navigate, reset, replace},
-}) => {
-  const handleLogin = async (email: any, password: any) => {
-    try {
-      const user = await login(email, password);
-      if (user) {
-        replace('MainNavigation');
-      }
-    } catch (error) {
-      console.error(error);
-      // Handle any errors here
-    }
+const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
+  const dispatch = useDispatch(); // Move useDispatch inside the functional component
+  const state = useSelector((state: RootState) => state?.auth?.signIn);
+
+  const onSubmit = (values: {email: string; password: string}) => {
+    const {email, password} = values;
+    dispatch(handleLogin(email, password));
   };
 
   return (
@@ -82,13 +78,7 @@ const SignInScreen: React.FC<Props> = ({
 
         <Formik
           initialValues={{email: '', password: ''}}
-          onSubmit={(values, actions) => {
-            handleLogin(values.email, values.password);
-            // Alert.alert(JSON.stringify(values));
-            setTimeout(() => {
-              actions.setSubmitting(false);
-            }, 100);
-          }}
+          onSubmit={onSubmit}
           validationSchema={validationSignInSchema}>
           {formikProps => (
             <React.Fragment>
@@ -104,7 +94,7 @@ const SignInScreen: React.FC<Props> = ({
                 secureTextEntry
               />
 
-              {formikProps.isSubmitting ? (
+              {state?.isLoading ? (
                 <ActivityIndicator />
               ) : (
                 <View style={{marginTop: Helper.normalize(22)}}>

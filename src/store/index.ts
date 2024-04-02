@@ -16,15 +16,15 @@ import authReducer from "./redux/reducers/auth.reducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["counter"]
+  whitelist: ["auth"]
 };
 
-const persisedtReducer = persistReducer(persistConfig, counterReducer);
+const persisedtReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    counter: persisedtReducer,
-    auth: authReducer
+    counter: counterReducer,
+    auth: persisedtReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

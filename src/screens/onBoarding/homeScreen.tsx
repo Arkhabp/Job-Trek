@@ -10,9 +10,10 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {handleSignOut} from '../../store/redux/action/auth';
 
-import {logout} from '../../services/auth';
 import {RootStackParamList} from '../../navigations/types';
+import {useDispatch} from 'react-redux';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
@@ -21,19 +22,14 @@ interface Props {
 const HomeScreen: React.FC<Props> = ({
   navigation: {navigate, reset, replace},
 }) => {
-  const handleLogout = async () => {
-    try {
-      await logout();
-      replace('AuthNavigation');
-      await AsyncStorage.clear();
-    } catch (error) {
-      console.error(error);
-      // Handle any errors here
-    }
+  const dispatch = useDispatch();
+
+  const onSignout = () => {
+    dispatch(handleSignOut());
   };
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => handleLogout()}>
+      <TouchableOpacity onPress={() => onSignout()}>
         <Text>Home Screen</Text>
       </TouchableOpacity>
     </SafeAreaView>
