@@ -45,7 +45,7 @@ const StyledInput: React.FC<StyledInputProps> = ({
         onBlur={() => formikProps.handleBlur(formikKey)}
         {...rest}
       />
-      <PoppinsText style={{color: Colors.red}}>
+      <PoppinsText style={{color: Colors.red, fontSize: Helper.fontSize(12)}}>
         {formikProps.touched[formikKey] && formikProps.errors[formikKey]}
       </PoppinsText>
     </View>
@@ -112,8 +112,8 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
                     textColor={Colors.white}
                     onPress={() => formikProps.handleSubmit()}
                     size="medium"
-                    fontSize={Helper.normalize(16)}
-                    borderRadius={Helper.normalize(9)}
+                    fontSize={Helper.fontSize(16)}
+                    borderRadius={Helper.normalize(6)}
                     minWidth={150}>
                     Sign Up
                   </DefaultButton>
@@ -127,12 +127,12 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
           style={{
             flexDirection: 'row',
             alignSelf: 'center',
-            marginTop: Helper.normalize(6),
+            marginTop: Helper.normalize(16),
           }}>
           <PoppinsText
             style={{
               color: Colors.blue,
-              fontSize: Helper.normalize(12),
+              fontSize: Helper.fontSize(12),
               fontWeight: '600',
             }}>
             Already have an acoount?{' '}
@@ -141,7 +141,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             <PoppinsText
               style={{
                 color: Colors.blue,
-                fontSize: Helper.normalize(12),
+                fontSize: Helper.fontSize(12),
                 fontWeight: '700',
               }}>
               Sign In
@@ -161,12 +161,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: Helper.normalize(22),
   },
   title: {
-    fontSize: Helper.normalize(30),
+    fontSize: Helper.fontSize(40),
     fontWeight: '700',
     color: Colors.blue,
   },
   greating: {
-    fontSize: Helper.normalize(14),
+    fontSize: Helper.fontSize(14),
     fontWeight: '500',
     color: Colors.blue,
   },
@@ -174,7 +174,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.blue,
     borderRadius: Helper.normalize(8),
+    paddingVertical: Helper.normalize(8),
     paddingLeft: 12,
+    color: Colors.black,
   },
 });
 

@@ -10,8 +10,8 @@ import {
   REGISTER
 } from "redux-persist";
 
-import counterReducer from "./redux/reducers/counter.reducer";
 import authReducer from "./redux/reducers/auth.reducer";
+import applicationReducer from "./redux/reducers/application.reducer";
 
 const persistConfig = {
   key: "root",
@@ -23,8 +23,8 @@ const persisedtReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
-    auth: persisedtReducer
+    auth: persisedtReducer,
+    application: applicationReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

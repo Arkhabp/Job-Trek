@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import HomeScreen from '../screens/onBoarding/homeScreen';
 import AuthNavigation from './AuthNavigation';
+import TabNavigation from './TabNavigation';
 
 const MainNavigation = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -27,14 +28,7 @@ const MainNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      {/* {!isLogin ? (
-        <Stack.Screen name="AuthNavigation" component={AuthNavigation} />
-      ) : (
-        <> */}
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="AuthNavigation" component={AuthNavigation} />
-      {/* </>
-      )} */}
+      <Stack.Screen name="TabNavigation" component={TabNavigation} />
     </Stack.Navigator>
   );
 };

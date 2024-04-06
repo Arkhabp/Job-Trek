@@ -3,12 +3,12 @@ import { types } from "../../../constans/auth.constan";
 // Definisikan tipe state
 interface AuthState {
   signIn: {
-    token: string | null;
+    token: string | undefined;
     error: string | null;
     isLoading: boolean;
   };
   signUp: {
-    data: any;
+    data: boolean;
     error: string | null;
     isLoading: boolean;
   };
@@ -17,12 +17,12 @@ interface AuthState {
 // Inisialisasi state awal
 const initialState: AuthState = {
   signIn: {
-    token: null,
+    token: undefined,
     error: null,
     isLoading: false
   },
   signUp: {
-    data: null,
+    data: false,
     error: null,
     isLoading: false
   }
@@ -34,6 +34,7 @@ const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         signIn: {
+          token: undefined,
           isLoading: true, // Menandakan bahwa proses login sedang berlangsung
           error: null // Menghapus pesan kesalahan
         }
@@ -51,6 +52,7 @@ const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         signIn: {
+          token: undefined,
           error: action.payload, // Menyimpan pesan kesalahan saat login gagal
           isLoading: false // Menandakan bahwa proses login gagal
         }
@@ -60,7 +62,8 @@ const authReducer = (state = initialState, action: any) => {
         ...state,
         signUp: {
           isLoading: true,
-          error: null
+          error: null,
+          data: false
         }
       };
     case types.SIGNUP_SUCCESS: {
@@ -68,7 +71,8 @@ const authReducer = (state = initialState, action: any) => {
         ...state,
         signUp: {
           data: action.payload,
-          isLoading: false
+          isLoading: false,
+          error: null
         }
       };
     }
@@ -77,7 +81,8 @@ const authReducer = (state = initialState, action: any) => {
         ...state,
         signUp: {
           error: action.payload,
-          isLoading: false
+          isLoading: false,
+          data: false
         }
       };
     }

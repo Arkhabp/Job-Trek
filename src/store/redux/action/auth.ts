@@ -4,6 +4,7 @@ import { ToastAndroid, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppDispatch } from "../../../store";
+import * as Burnt from "burnt";
 
 // const dispatch = useDispatch();
 export function handleLogin(email: string, password: any) {
@@ -45,7 +46,15 @@ export function handleLogin(email: string, password: any) {
       console.log(error.message);
       // You can dispatch an action for login failure here if needed
       dispatch({ type: types.LOGIN_FAILED, payload: error.message });
-      ToastAndroid.show("Login failed !", ToastAndroid.SHORT);
+      // ToastAndroid.show("Login failed !", ToastAndroid.SHORT);
+      Burnt.toast({
+        title: "Login failed !",
+        preset: "error",
+        message: "Login failed !",
+        haptic: "warning",
+        shouldDismissByDrag: true,
+        from: "top"
+      });
 
       // Return null in case of error
       return null;
@@ -74,8 +83,8 @@ export const handleSignup = (email: string, password: string, name: string) => {
         "User account created. Please check your email for verification!"
       );
 
-      const userData = { email: email, password: password, name: name };
-      dispatch({ type: types.SIGNUP_SUCCESS, payload: userData });
+      const userData = { email: email, name: name };
+      dispatch({ type: types.SIGNUP_SUCCESS, payload: true });
     } catch (error: any) {
       dispatch({
         type: types.SIGNUP_FAILED,

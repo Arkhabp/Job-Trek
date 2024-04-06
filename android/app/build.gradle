@@ -89,6 +89,12 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+        } 
+        release {
+            storeFile file('jobTrek.keystore')
+            storePassword '123456'
+            keyAlias 'your_key_alias'
+            keyPassword '123456'
         }
     }
     buildTypes {
