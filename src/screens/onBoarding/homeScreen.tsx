@@ -12,6 +12,7 @@ import {
   ScrollView,
   FlatList,
   Dimensions,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -81,9 +82,26 @@ const HomeScreen: React.FC<Props> = ({
     (state: RootState) => state?.application.application.data,
   );
 
+  const initials = Helper.getInitials(name);
+
   return (
     <SafeAreaView style={styles.container}>
       <Pressable onPress={Keyboard.dismiss} style={{flex: 1}}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('../../assets/Images/Logo.png')}
+            style={{
+              width: 94,
+              height: 56,
+              resizeMode: 'contain',
+            }}
+          />
+
+          <View style={styles.initialContainer}>
+            <PoppinsText style={styles.initialText}>{initials}</PoppinsText>
+          </View>
+        </View>
+
         <View style={{gap: 10, paddingHorizontal: 12}}>
           <PoppinsText style={styles.greating}>Hi {name}</PoppinsText>
 
@@ -184,6 +202,21 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     flex: 1,
   },
+  imageContainer: {
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  initialContainer: {
+    width: 34,
+    height: 34,
+    borderRadius: 34 / 2,
+    backgroundColor: Colors.blue,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  initialText: {fontWeight: 'bold', color: Colors.white},
   welcome: {
     fontSize: 20,
     textAlign: 'center',

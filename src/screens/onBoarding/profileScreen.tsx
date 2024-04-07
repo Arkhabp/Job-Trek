@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Touchable,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +15,8 @@ import {handleSignOut} from '../../store/redux/action/auth';
 
 import {RootStackParamList} from '../../navigations/types';
 import {useDispatch} from 'react-redux';
+import BottomSheet, {BottomSheetMethods} from '../../components/BottomSheet';
+import Colors from '../../constans/colors';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
@@ -27,13 +30,25 @@ const ProfileScreen: React.FC<Props> = ({
   const onSignout = () => {
     dispatch(handleSignOut());
   };
+
+  const bottomSheetRef = useRef<BottomSheetMethods>(null);
+
+  const expandHandler = useCallback(() => {
+    bottomSheetRef.current?.expand();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => ''}>
-        <TouchableOpacity onPress={() => onSignout()}>
-          <Text>Profile Screen</Text>
-        </TouchableOpacity>
-      </TouchableOpacity>
+      {/* <TouchableOpacity onPress={() => onSignout()}>
+        <Text>Profile Screen</Text>
+      </TouchableOpacity> */}
+
+      <Button title="expand" onPress={() => expandHandler()} />
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapTo={'80%'}
+        backgroundColor={Colors.brokenWhite}
+      />
     </SafeAreaView>
   );
 };
@@ -41,8 +56,8 @@ const ProfileScreen: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {

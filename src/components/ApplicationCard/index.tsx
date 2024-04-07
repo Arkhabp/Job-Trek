@@ -28,7 +28,7 @@ const ApplicationCard: React.FC<Props> = ({data}) => {
         key={data.id}
         style={{marginTop: 4, marginHorizontal: 2}}
         activeOpacity={0.8}>
-        <View style={styles.container}>
+        <View style={[styles.container]}>
           <View style={styles.containerStatus}>
             <PoppinsText style={styles.TextStatus}>{data.status}</PoppinsText>
           </View>
@@ -55,7 +55,7 @@ const ApplicationCard: React.FC<Props> = ({data}) => {
           </View>
 
           <TouchableOpacity activeOpacity={0.8}>
-            <PoppinsText style={styles.buttonEdit}>Edit</PoppinsText>
+            <PoppinsText style={styles.buttonEdit}>Update</PoppinsText>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -66,7 +66,7 @@ const ApplicationCard: React.FC<Props> = ({data}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
-    borderWidth: 0.5,
+    // borderWidth: 0.5,
     borderColor: Colors.grey,
     width: '100%',
     paddingVertical: 10,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   buttonEdit: {
     fontSize: Helper.fontSize(14),
     color: Colors.blue,
-    fontWeight: 'bold',
+    fontWeight: '700',
     alignSelf: 'flex-end',
   },
 });

@@ -62,19 +62,21 @@ const TabNavigation: React.FC<TabNavigationProps> = () => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('Add')}>
-                <View style={styles.addContainer}>
-                  <Icons
-                    name={'Plus'}
-                    size={Helper.normalize(24)}
-                    color={Colors.white}
-                  />
-                  <PoppinsText
-                    style={{
-                      color: Colors.white,
-                      fontSize: Helper.fontSize(10),
-                    }}>
-                    ADD
-                  </PoppinsText>
+                <View style={[styles.addContainer]}>
+                  <View style={[styles.addContainer1, Helper.getShadowStyle()]}>
+                    <Icons
+                      name={'Plus'}
+                      size={Helper.normalize(20)}
+                      color={Colors.white}
+                    />
+                    <PoppinsText
+                      style={{
+                        color: Colors.white,
+                        fontSize: Helper.fontSize(9),
+                      }}>
+                      ADD
+                    </PoppinsText>
+                  </View>
                 </View>
               </TouchableOpacity>
             );
@@ -103,7 +105,7 @@ const TabNavigation: React.FC<TabNavigationProps> = () => {
 
 const styles = StyleSheet.create({
   TabBarStyle: {
-    height: Helper.normalize(45),
+    height: Helper.normalize(42),
     borderTopLeftRadius: Helper.normalize(14),
     borderTopRightRadius: Helper.normalize(14),
     position: 'absolute',
@@ -120,23 +122,24 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   addContainer: {
-    width: Helper.normalize(56),
-    height: Helper.normalize(56),
-    borderRadius: Helper.normalize(56) / 2,
+    width: Helper.normalize(52),
+    height: Helper.normalize(52),
+    borderRadius: Helper.normalize(52) / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.brokenWhite,
+    top: Helper.normalize(-6),
+    gap: 3,
+  },
+  addContainer1: {
+    width: Helper.normalize(42),
+    height: Helper.normalize(42),
+    borderRadius: Helper.normalize(42) / 2,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.blue,
-    top: Helper.normalize(-6),
     gap: 3,
     paddingTop: 6,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: Platform.OS === 'android' ? 2 : 0,
   },
 });
 

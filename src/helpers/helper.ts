@@ -37,4 +37,28 @@ export default class Helper {
 
     return unit;
   };
+
+  static getShadowStyle() {
+    if (Platform.OS === "ios") {
+      return {
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4
+      };
+    } else {
+      return {
+        elevation: 2
+      };
+    }
+  }
+
+  static getInitials(name: string): string {
+    const words = name.split(" ");
+    const initials = words.map((word) => word.charAt(0));
+    return initials.join("").toUpperCase();
+  }
 }
