@@ -58,7 +58,14 @@ export default class Helper {
 
   static getInitials(name: string): string {
     const words = name.split(" ");
-    const initials = words.map((word) => word.charAt(0));
-    return initials.join("").toUpperCase();
+    let initials = "";
+
+    if (words.length >= 2) {
+      initials = words[0].charAt(0) + words[1].charAt(0);
+    } else if (words.length === 1) {
+      initials = words[0].charAt(0);
+    }
+
+    return initials.toUpperCase();
   }
 }

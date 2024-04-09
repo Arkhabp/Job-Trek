@@ -10,7 +10,8 @@ import Helper from '../helpers/helper';
 import Colors from '../constans/colors';
 import Icons from '../components/icon';
 import {View} from 'react-native';
-import PoppinsText from '../components/text';
+import TextComponent from '../components/text';
+import {PaperProvider} from 'react-native-paper';
 
 // Membuat tipe props untuk komponen TabNavigation
 type TabNavigationProps = {};
@@ -20,86 +21,89 @@ const Tab = createBottomTabNavigator();
 const TabNavigation: React.FC<TabNavigationProps> = () => {
   const navigation = useNavigation();
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      backBehavior="initialRoute"
-      screenOptions={{
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: styles.TabBarStyle,
-        tabBarInactiveTintColor: Colors.grey,
-        tabBarActiveTintColor: Colors.black,
-        tabBarLabelStyle: {
-          fontSize: Helper.fontSize(11),
-          fontWeight: '600',
-          marginTop: Helper.normalize(-6),
-        },
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={({}) => ({
-          tabBarIcon: ({focused}) => {
-            return (
-              <Icons
-                name={'Home'}
-                color={focused ? Colors.black : Colors.grey}
-                size={Helper.normalize(18)}
-              />
-            );
+    <PaperProvider>
+      <Tab.Navigator
+        initialRouteName="Home"
+        backBehavior="initialRoute"
+        screenOptions={{
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: styles.TabBarStyle,
+          tabBarInactiveTintColor: Colors.grey,
+          tabBarActiveTintColor: Colors.black,
+          tabBarLabelStyle: {
+            fontSize: Helper.fontSize(11),
+            fontWeight: '600',
+            marginTop: Helper.normalize(-6),
           },
-          tabBarLabel: 'Home',
-          headerShadowVisible: false,
-          headerShown: false,
-        })}
-      />
-      <Tab.Screen
-        name="Add"
-        component={AddAplicationScreen}
-        options={({}) => ({
-          tabBarLabel: '',
-          tabBarIcon: ({focused}) => {
-            return (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => navigation.navigate('Add')}>
-                <View style={[styles.addContainer]}>
-                  <View style={[styles.addContainer1, Helper.getShadowStyle()]}>
-                    <Icons
-                      name={'Plus'}
-                      size={Helper.normalize(20)}
-                      color={Colors.white}
-                    />
-                    <PoppinsText
-                      style={{
-                        color: Colors.white,
-                        fontSize: Helper.fontSize(9),
-                      }}>
-                      ADD
-                    </PoppinsText>
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={({}) => ({
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icons
+                  name={'Home'}
+                  color={focused ? Colors.black : Colors.grey}
+                  size={Helper.normalize(18)}
+                />
+              );
+            },
+            tabBarLabel: 'Home',
+            headerShadowVisible: false,
+            headerShown: false,
+          })}
+        />
+        <Tab.Screen
+          name="Add"
+          component={AddAplicationScreen}
+          options={({}) => ({
+            tabBarLabel: '',
+            tabBarIcon: ({focused}) => {
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate('Add')}>
+                  <View style={[styles.addContainer, Helper.getShadowStyle()]}>
+                    <View
+                      style={[styles.addContainer1, Helper.getShadowStyle()]}>
+                      <Icons
+                        name={'Plus'}
+                        size={Helper.normalize(20)}
+                        color={Colors.white}
+                      />
+                      <TextComponent
+                        style={{
+                          color: Colors.white,
+                          fontSize: Helper.fontSize(9),
+                        }}>
+                        ADD
+                      </TextComponent>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          },
-        })}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={({}) => ({
-          tabBarIcon: ({focused}) => {
-            return (
-              <Icons
-                name={'Profile'}
-                color={focused ? Colors.black : Colors.grey}
-                size={Helper.normalize(18)}
-              />
-            );
-          },
-          tabBarLabel: 'Profile',
-        })}
-      />
-    </Tab.Navigator>
+                </TouchableOpacity>
+              );
+            },
+          })}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={({}) => ({
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icons
+                  name={'Profile'}
+                  color={focused ? Colors.black : Colors.grey}
+                  size={Helper.normalize(18)}
+                />
+              );
+            },
+            tabBarLabel: 'Profile',
+          })}
+        />
+      </Tab.Navigator>
+    </PaperProvider>
   );
 };
 

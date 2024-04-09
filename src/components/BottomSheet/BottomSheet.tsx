@@ -5,7 +5,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import PoppinsText from '../text';
+import TextComponent from '../text';
 import Colors from '../../constans/colors';
 import Animated, {
   useAnimatedStyle,
@@ -16,6 +16,8 @@ import Animated, {
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import BackDrop from './BackDrop';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSelector, useDispatch} from 'react-redux';
+import {RootState} from '../../store';
 
 type Props = {
   snapTo: string;
@@ -38,6 +40,10 @@ const BottomSheet = forwardRef<BottomSheetMethods, Props>(
     const openHeight = height - height * percentage;
     const topAnimation = useSharedValue(closeHeight);
     const context = useSharedValue(0);
+    const dispatch = useDispatch();
+    const isOpen = useSelector(
+      (state: RootState) => state?.bottomSheet?.isOpen,
+    );
 
     const expand = useCallback(() => {
       'worklet';
@@ -102,7 +108,7 @@ const BottomSheet = forwardRef<BottomSheetMethods, Props>(
       <>
         <BackDrop
           topAnimation={topAnimation}
-          closeHeght={closeHeight}
+          closeHeight={closeHeight}
           openHeight={openHeight}
           close={close}
           backDropColor={backDropColor}

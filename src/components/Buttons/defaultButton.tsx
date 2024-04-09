@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import Colors from '../../constans/colors';
 import Helper from '../../helpers/helper';
-import PoppinsText from '../text';
+import TextComponent from '../text';
 
 interface DefaultButtonProps {
   color?:
@@ -93,14 +93,14 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
           // borderWidth: type === 'outline' && color === 'darkGrey' ? 1 : 0,
         },
       ]}>
-      <PoppinsText
+      <TextComponent
         style={{
           color: type === 'solid' ? textColor : Colors.blue,
           fontSize: fontSize,
           fontWeight: '700',
         }}>
         {children}
-      </PoppinsText>
+      </TextComponent>
     </TouchableOpacity>
   );
 };

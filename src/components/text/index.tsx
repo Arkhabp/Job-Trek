@@ -1,12 +1,13 @@
 import React from 'react';
 import {Text as RNText, TextProps} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {fonts} from '../../helpers/fonst';
 
-interface PoppinsTextProps extends TextProps {
+interface TextComponentProps extends TextProps {
   children: React.ReactNode;
 }
 
-const PoppinsText: React.FC<PoppinsTextProps> = ({
+const TextComponent: React.FC<TextComponentProps> = ({
   children,
   style,
   ...rest
@@ -14,7 +15,7 @@ const PoppinsText: React.FC<PoppinsTextProps> = ({
   return (
     <RNText
       style={[
-        {fontFamily: 'Poppins-Regular', color: Colors.black, fontWeight: '600'},
+        {fontFamily: fonts.Regular, color: Colors.black, fontWeight: '600'},
         style,
       ]}
       {...rest}>
@@ -23,4 +24,4 @@ const PoppinsText: React.FC<PoppinsTextProps> = ({
   );
 };
 
-export default PoppinsText;
+export default TextComponent;

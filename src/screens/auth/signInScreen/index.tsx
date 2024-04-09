@@ -21,7 +21,7 @@ import {handleLogin} from '../../../store/redux/action/auth';
 import {RootState} from '../../../store';
 import Colors from '../../../constans/colors';
 import Helper from '../../../helpers/helper';
-import PoppinsText from '../../../components/text';
+import TextComponent from '../../../components/text';
 
 import validationSignInSchema from './validation';
 import DefaultButton from '../../../components/Buttons/defaultButton';
@@ -47,9 +47,9 @@ const StyledInput: React.FC<StyledInputProps> = ({
         onBlur={() => formikProps.handleBlur(formikKey)}
         {...rest}
       />
-      <PoppinsText style={{color: Colors.red, fontSize: Helper.fontSize(12)}}>
+      <TextComponent style={{color: Colors.red, fontSize: Helper.fontSize(12)}}>
         {formikProps.touched[formikKey] && formikProps.errors[formikKey]}
-      </PoppinsText>
+      </TextComponent>
     </View>
   );
 };
@@ -72,8 +72,10 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
       <Pressable onPress={Keyboard.dismiss}>
         <View
           style={{alignItems: 'center', marginBottom: Helper.normalize(62)}}>
-          <PoppinsText style={styles.title}>Sign In</PoppinsText>
-          <PoppinsText style={styles.greating}>Hi! Welcome back</PoppinsText>
+          <TextComponent style={styles.title}>Sign In</TextComponent>
+          <TextComponent style={styles.greating}>
+            Hi! Welcome back
+          </TextComponent>
         </View>
 
         <Formik
@@ -121,23 +123,23 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             alignSelf: 'center',
             marginTop: Helper.normalize(16),
           }}>
-          <PoppinsText
+          <TextComponent
             style={{
               color: Colors.blue,
               fontSize: Helper.fontSize(12),
               fontWeight: '600',
             }}>
             Don't have an account?{' '}
-          </PoppinsText>
+          </TextComponent>
           <TouchableOpacity onPress={() => navigate('SignUp')}>
-            <PoppinsText
+            <TextComponent
               style={{
                 color: Colors.blue,
                 fontSize: Helper.fontSize(12),
                 fontWeight: '700',
               }}>
               Sign Up
-            </PoppinsText>
+            </TextComponent>
           </TouchableOpacity>
         </View>
       </Pressable>

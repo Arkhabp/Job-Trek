@@ -12,6 +12,7 @@ import {
 
 import authReducer from "./redux/reducers/auth.reducer";
 import applicationReducer from "./redux/reducers/application.reducer";
+import bottomSheetReducer from "./redux/reducers/bottomSheet.reducer";
 
 const persistConfig = {
   key: "root",
@@ -24,7 +25,8 @@ const persisedtReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persisedtReducer,
-    application: applicationReducer
+    application: applicationReducer,
+    bottomSheet: bottomSheetReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

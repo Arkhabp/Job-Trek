@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
-import PoppinsText from '../text';
+import TextComponent from '../text';
 import Animated, {
   SharedValue,
   interpolate,
@@ -11,7 +11,7 @@ import Colors from '../../constans/colors';
 type Props = {
   topAnimation: SharedValue<number>;
   openHeight: number;
-  closeHeght: number;
+  closeHeight: number;
   close: () => void;
   backDropColor?: string;
 };
@@ -19,14 +19,14 @@ type Props = {
 const BackDrop = ({
   topAnimation,
   openHeight,
-  closeHeght,
+  closeHeight,
   close,
   backDropColor,
 }: Props) => {
   const backDropAnimation = useAnimatedStyle(() => {
     const opacity = interpolate(
       topAnimation.value,
-      [closeHeght, openHeight],
+      [closeHeight, openHeight],
       [0, 0.5],
     );
     const display = opacity === 0 ? 'none' : 'flex';

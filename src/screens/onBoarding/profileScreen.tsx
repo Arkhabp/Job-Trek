@@ -9,14 +9,19 @@ import {
   Button,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Portal} from 'react-native-paper';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {handleSignOut} from '../../store/redux/action/auth';
-
-import {RootStackParamList} from '../../navigations/types';
 import {useDispatch} from 'react-redux';
-import BottomSheet, {BottomSheetMethods} from '../../components/BottomSheet';
+
+import {handleSignOut} from '../../store/redux/action/auth';
+import {RootStackParamList} from '../../navigations/types';
+import BottomSheet, {
+  BottomSheetMethods,
+} from '../../components/BottomSheet/BottomSheet';
 import Colors from '../../constans/colors';
+import TextComponent from '../../components/text';
+import BottomSheetScrollView from '../../components/BottomSheet/BottomSheetScrollView';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
@@ -32,9 +37,13 @@ const ProfileScreen: React.FC<Props> = ({
   };
 
   const bottomSheetRef = useRef<BottomSheetMethods>(null);
+  const bottomSheetRef2 = useRef<BottomSheetMethods>(null);
 
   const expandHandler = useCallback(() => {
     bottomSheetRef.current?.expand();
+  }, []);
+  const expandHandlerScroll = useCallback(() => {
+    bottomSheetRef2.current?.expand();
   }, []);
 
   return (
@@ -44,11 +53,32 @@ const ProfileScreen: React.FC<Props> = ({
       </TouchableOpacity> */}
 
       <Button title="expand" onPress={() => expandHandler()} />
+      <Button
+        title="Bottom sheet scroll"
+        onPress={() => expandHandlerScroll()}
+      />
       <BottomSheet
         ref={bottomSheetRef}
         snapTo={'80%'}
         backgroundColor={Colors.brokenWhite}
       />
+      <BottomSheetScrollView
+        ref={bottomSheetRef2}
+        snapTo={'60%'}
+        backgroundColor={Colors.brokenWhite}>
+        <TextComponent>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. It has survived not only
+          five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and
+          more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of
+          the printing and typesetting industry. Lorem Ipsum has been the
+        </TextComponent>
+      </BottomSheetScrollView>
     </SafeAreaView>
   );
 };

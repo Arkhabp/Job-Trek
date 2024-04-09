@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {TouchableOpacity, View, StyleSheet} from 'react-native';
 
 import Colors from '../../constans/colors';
-import PoppinsText from '../text';
+import TextComponent from '../text';
 import Helper from '../../helpers/helper';
+import CustomBottomSheetModal from '../BottomSheet/customBottomSheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {useBottomSheetBackHandler} from '../BottomSheet/BackHandler';
 
 // Definisikan tipe data untuk setiap item dalam array data
 interface ApplicationData {
@@ -19,9 +22,16 @@ interface ApplicationData {
 
 interface Props {
   data: ApplicationData; // Tipe prop 'data' adalah ApplicationData
+  onPress?: () => void;
 }
 
-const ApplicationCard: React.FC<Props> = ({data}) => {
+const ApplicationCard: React.FC<Props> = ({data, onPress}) => {
+  const bottomSheetRefUpdate = useRef<BottomSheetModal>(null);
+  const bottomSheetUpdateHandler = () => {
+    return bottomSheetRefUpdate.current?.present();
+  };
+  const {handleSheetPositionChange} =
+    useBottomSheetBackHandler(bottomSheetRefUpdate);
   return (
     <>
       <TouchableOpacity
@@ -30,35 +40,77 @@ const ApplicationCard: React.FC<Props> = ({data}) => {
         activeOpacity={0.8}>
         <View style={[styles.container]}>
           <View style={styles.containerStatus}>
-            <PoppinsText style={styles.TextStatus}>{data.status}</PoppinsText>
+            <TextComponent style={styles.TextStatus}>
+              {data.status}
+            </TextComponent>
           </View>
-          <PoppinsText style={styles.TextCompany} numberOfLines={1}>
+          <TextComponent style={styles.TextCompany} numberOfLines={1}>
             {data.companyName}
-          </PoppinsText>
-          <PoppinsText style={styles.TextDetail}>
+          </TextComponent>
+          <TextComponent style={styles.TextDetail}>
             {data.position}
             {'\n'}
             {data.employmentType}
             {'\n'}
             {data.portal}
-          </PoppinsText>
+          </TextComponent>
 
           <View style={styles.line} />
 
           <View style={{flexDirection: 'row', gap: 4}}>
             <View style={styles.markProgress} />
-            <PoppinsText style={styles.progress}>
+            <TextComponent style={styles.progress}>
               {data.offering}
               {'\n'}
               {data.progressDate}
-            </PoppinsText>
+            </TextComponent>
           </View>
 
-          <TouchableOpacity activeOpacity={0.8}>
-            <PoppinsText style={styles.buttonEdit}>Update</PoppinsText>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={bottomSheetUpdateHandler}>
+            <TextComponent style={styles.buttonEdit}>Update</TextComponent>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
+      <CustomBottomSheetModal
+        ref={bottomSheetRefUpdate}
+        snapPoints={['25%', '50%', '75%']}
+        onchange={handleSheetPositionChange}
+        title="Update">
+        <View
+          style={{
+            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <TextComponent
+              style={[styles.TextCompany, {fontSize: Helper.fontSize(16)}]}
+              numberOfLines={1}>
+              {data.companyName}
+            </TextComponent>
+            <TextComponent style={styles.TextDetail}>
+              {data.position}
+              {'\n'}
+              {data.employmentType}
+              {'\n'}
+              {data.portal}
+            </TextComponent>
+          </View>
+
+          <View style={{flexDirection: 'row', gap: 4}}>
+            <View
+              style={[styles.markProgress, {backgroundColor: Colors.blue}]}
+            />
+            <TextComponent style={styles.progress}>
+              {data.offering}
+              {'\n'}
+              {data.progressDate}
+            </TextComponent>
+          </View>
+        </View>
+      </CustomBottomSheetModal>
     </>
   );
 };
@@ -116,6 +168,12 @@ const styles = StyleSheet.create({
     color: Colors.blue,
     fontWeight: '700',
     alignSelf: 'flex-end',
+  },
+  progressIndicator: {
+    height: 20,
+    width: 20,
+    backgroundColor: Colors.blue,
+    borderRadius: 20 / 2,
   },
 });
 export default ApplicationCard;

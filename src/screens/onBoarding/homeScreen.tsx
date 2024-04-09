@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -21,12 +21,16 @@ import {handleSignOut} from '../../store/redux/action/auth';
 
 import {RootStackParamList} from '../../navigations/types';
 import {useDispatch, useSelector} from 'react-redux';
-import PoppinsText from '../../components/text';
+import TextComponent from '../../components/text';
 import Helper from '../../helpers/helper';
 import Colors from '../../constans/colors';
 import Icons from '../../components/icon';
 import ApplicationCard from '../../components/ApplicationCard';
 import {RootState} from '../../store';
+import industryType from '../../constans/industryType';
+import CustomBottomSheetModal from '../../components/BottomSheet/customBottomSheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {useBottomSheetBackHandler} from '../../components/BottomSheet/BackHandler';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
@@ -37,52 +41,30 @@ const HomeScreen: React.FC<Props> = ({
 }) => {
   const [name, setName] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState<number | null>(null); // State untuk melacak item industri yang dipilih
+  const industry = industryType;
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getName = async () => {
-      const displayName: any = await AsyncStorage.getItem('@displayName');
-      setName(displayName);
-    };
-    getName();
-  }, []);
-
-  const industry = [
-    {
-      id: 1,
-      name: 'Mining',
-    },
-    {
-      id: 2,
-      name: 'Construction',
-    },
-    {
-      id: 4,
-      name: 'Manufacturing',
-    },
-    {
-      id: 5,
-      name: 'Manufacturing',
-    },
-    {
-      id: 6,
-      name: 'Manufacturing',
-    },
-    {
-      id: 7,
-      name: 'Manufacturing',
-    },
-    {
-      id: 8,
-      name: 'Manufacturing',
-    },
-  ];
 
   const dataApplication = useSelector(
     (state: RootState) => state?.application.application.data,
   );
 
+  const bottomSheetRefFilter = useRef<BottomSheetModal>(null);
+
+  const {handleSheetPositionChange} =
+    useBottomSheetBackHandler(bottomSheetRefFilter);
+
+  const bottomSheetFilterHandler = () => {
+    return bottomSheetRefFilter.current?.present();
+  };
+
   const initials = Helper.getInitials(name);
+  useEffect(() => {
+    const getName = async () => {
+      const displayName: any = await AsyncStorage.getItem('@displayName');
+      setName('Muhammad Arkhab Purnama Agdana');
+    };
+    getName();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -98,12 +80,16 @@ const HomeScreen: React.FC<Props> = ({
           />
 
           <View style={styles.initialContainer}>
-            <PoppinsText style={styles.initialText}>{initials}</PoppinsText>
+            <TextComponent style={styles.initialText}>{initials}</TextComponent>
           </View>
         </View>
 
         <View style={{gap: 10, paddingHorizontal: 12}}>
-          <PoppinsText style={styles.greating}>Hi {name}</PoppinsText>
+          <TextComponent
+            style={[styles.greating, {fontFamily: 'Poppins-SemiBold'}]}
+            numberOfLines={1}>
+            Hi {name}
+          </TextComponent>
 
           <View style={styles.textInput}>
             <Icons
@@ -128,16 +114,18 @@ const HomeScreen: React.FC<Props> = ({
             paddingLeft: 12,
             paddingBottom: 10,
           }}>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={bottomSheetFilterHandler}>
             <View style={{flexDirection: 'row'}}>
               <Icons
                 name={'Filter'}
                 size={Helper.normalize(16)}
                 color={Colors.black}
               />
-              <PoppinsText style={{fontSize: Helper.fontSize(14)}}>
+              <TextComponent style={{fontSize: Helper.fontSize(14)}}>
                 Filter
-              </PoppinsText>
+              </TextComponent>
             </View>
           </TouchableOpacity>
 
@@ -161,7 +149,7 @@ const HomeScreen: React.FC<Props> = ({
                     alignItems: 'center',
                     marginRight: 4,
                   }}>
-                  <PoppinsText
+                  <TextComponent
                     style={{
                       fontSize: Helper.fontSize(14),
                       color:
@@ -171,7 +159,7 @@ const HomeScreen: React.FC<Props> = ({
                       fontWeight: selectedIndustry === item.id ? '900' : '700',
                     }}>
                     {item.name}
-                  </PoppinsText>
+                  </TextComponent>
                 </View>
               </TouchableOpacity>
             ))}
@@ -191,6 +179,92 @@ const HomeScreen: React.FC<Props> = ({
           showsVerticalScrollIndicator={false}
           ListFooterComponent={<View style={{height: 100}} />}
         />
+
+        <CustomBottomSheetModal
+          ref={bottomSheetRefFilter}
+          snapPoints={['25%']}
+          onchange={handleSheetPositionChange}
+          title="Filter">
+          <View style={{gap: 14}}>
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <TextComponent
+                style={{fontSize: Helper.fontSize(13), fontWeight: '700'}}>
+                Success
+              </TextComponent>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderColor: Colors.blue,
+                  width: 18,
+                  height: 18,
+                  borderRadius: 18 / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    backgroundColor: Colors.blue,
+                    width: 12,
+                    height: 12,
+                    borderRadius: 12 / 2,
+                  }}
+                />
+              </View>
+            </View>
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <TextComponent
+                style={{fontSize: Helper.fontSize(13), fontWeight: '600'}}>
+                Fail
+              </TextComponent>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderColor: Colors.blue,
+                  width: 18,
+                  height: 18,
+                  borderRadius: 18 / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}></View>
+            </View>
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <TextComponent
+                style={{fontSize: Helper.fontSize(13), fontWeight: '600'}}>
+                On Process
+              </TextComponent>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderColor: Colors.blue,
+                  width: 18,
+                  height: 18,
+                  borderRadius: 18 / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}></View>
+            </View>
+            <View
+              style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+              <TextComponent
+                style={{fontSize: Helper.fontSize(13), fontWeight: '600'}}>
+                Registered
+              </TextComponent>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderColor: Colors.blue,
+                  width: 18,
+                  height: 18,
+                  borderRadius: 18 / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}></View>
+            </View>
+          </View>
+        </CustomBottomSheetModal>
       </Pressable>
     </SafeAreaView>
   );
@@ -229,7 +303,7 @@ const styles = StyleSheet.create({
   },
   greating: {
     fontSize: Helper.fontSize(16),
-    fontWeight: '700',
+    width: '60%',
   },
   textInput: {
     borderWidth: 1,
