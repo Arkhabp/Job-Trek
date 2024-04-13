@@ -4,6 +4,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  TouchableOpacityProps,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -11,7 +14,7 @@ import Colors from '../../constans/colors';
 import Helper from '../../helpers/helper';
 import TextComponent from '../text';
 
-interface DefaultButtonProps {
+interface DefaultButtonProps extends TouchableOpacityProps {
   color?:
     | 'primary'
     | 'secondary'
@@ -29,6 +32,7 @@ interface DefaultButtonProps {
   minWidth?: number;
   loading?: boolean;
   children: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 const DefaultButton: React.FC<DefaultButtonProps> = ({
@@ -41,6 +45,8 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
   borderRadius,
   minWidth,
   onPress,
+  style,
+  ...props
 }) => {
   let backgroundColor = Colors.blue;
   let textColor: string = txtColor ?? Colors.white;
@@ -89,10 +95,12 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
           paddingHorizontal: size === 'small' ? 16 : size === 'large' ? 24 : 20,
           borderRadius: borderRadius || 10,
           minWidth: minWidth || undefined,
+          ...(style as any),
           // borderColor: color === 'darkGrey' ? Colors.blue : 'transparent',
           // borderWidth: type === 'outline' && color === 'darkGrey' ? 1 : 0,
         },
-      ]}>
+      ]}
+      {...props}>
       <TextComponent
         style={{
           color: type === 'solid' ? textColor : Colors.blue,

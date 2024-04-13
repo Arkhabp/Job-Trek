@@ -1,4 +1,8 @@
-const status = [
+const statusType = [
+  {
+    id: 0,
+    name: "All"
+  },
   {
     id: 1,
     name: "Success"
@@ -17,4 +21,4 @@ const status = [
   }
 ];
 
-export default status;
+export default statusType;

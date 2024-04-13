@@ -43,6 +43,7 @@ const StyledInput: React.FC<StyledInputProps> = ({
         style={styles.TextInput}
         onChangeText={text => formikProps.handleChange(formikKey)(text)}
         onBlur={() => formikProps.handleBlur(formikKey)}
+        placeholderTextColor={Colors.grey}
         {...rest}
       />
       <TextComponent style={{color: Colors.red, fontSize: Helper.fontSize(12)}}>

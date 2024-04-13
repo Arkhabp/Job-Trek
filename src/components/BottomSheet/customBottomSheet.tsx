@@ -1,5 +1,5 @@
 import React, {ReactNode, forwardRef, useCallback, useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Keyboard, Pressable, StyleSheet, View} from 'react-native';
 import {BottomSheetBackdrop, BottomSheetModal} from '@gorhom/bottom-sheet';
 import TextComponent from '../text';
 import {BottomSheetDefaultBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';

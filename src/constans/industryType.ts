@@ -1,5 +1,9 @@
 const industryType = [
   {
+    id: 0,
+    name: "All"
+  },
+  {
     id: 1,
     name: "Technology"
   },
