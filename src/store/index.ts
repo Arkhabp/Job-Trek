@@ -9,10 +9,12 @@ import {
   PURGE,
   REGISTER
 } from "redux-persist";
+import { applyMiddleware, combineReducers } from "redux";
 
 import authReducer from "./redux/reducers/auth.reducer";
 import applicationReducer from "./redux/reducers/application.reducer";
 import bottomSheetReducer from "./redux/reducers/bottomSheet.reducer";
+import { thunk } from "redux-thunk";
 
 const persistConfig = {
   key: "root",
@@ -33,12 +35,12 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    })
+    }).concat(thunk)
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
 
 export const persistor = persistStore(store);

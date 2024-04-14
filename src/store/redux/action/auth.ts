@@ -1,14 +1,15 @@
 import auth from "@react-native-firebase/auth";
 import { types } from "../../../constans/auth.constan";
 import { ToastAndroid, Alert } from "react-native";
-import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AppDispatch } from "../../../store";
+// import { AppDispatch } from "../../../store";
 import * as Burnt from "burnt";
+import { Dispatch } from "redux";
+import { LogoutAction } from "../../../../types/auth.types";
 
 // const dispatch = useDispatch();
 export function handleLogin(email: string, password: any) {
-  return async (dispatch: AppDispatch) => {
+  return async (dispatch: any) => {
     try {
       dispatch({ type: types.LOGIN_REQUEST });
       const userCredential = await auth().signInWithEmailAndPassword(
@@ -63,7 +64,7 @@ export function handleLogin(email: string, password: any) {
 }
 
 export const handleSignup = (email: string, password: string, name: string) => {
-  return async (dispatch: AppDispatch) => {
+  return async (dispatch: any) => {
     dispatch({ type: types.SIGNUP_REQUEST });
     try {
       const userCredential = await auth().createUserWithEmailAndPassword(
@@ -103,12 +104,12 @@ export const handleSignup = (email: string, password: string, name: string) => {
 };
 
 export function handleSignOut() {
-  return async (dispatch: any) => {
+  return async (dispatch: Dispatch<LogoutAction>) => {
     try {
-      auth().signOut();
+      await auth().signOut();
+      await AsyncStorage.clear();
       ToastAndroid.show("Logout success!", ToastAndroid.SHORT);
       dispatch({ type: types.LOGOUT });
-      await AsyncStorage.clear();
     } catch (error) {
       console.error("Error signing out:", error);
     }

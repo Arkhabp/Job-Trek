@@ -3,7 +3,7 @@ import { types } from "../../../constans/auth.constan";
 // Definisikan tipe state
 interface AuthState {
   signIn: {
-    token: string | undefined;
+    token: string | null;
     error: string | null;
     isLoading: boolean;
   };
@@ -17,7 +17,7 @@ interface AuthState {
 // Inisialisasi state awal
 const initialState: AuthState = {
   signIn: {
-    token: undefined,
+    token: null,
     error: null,
     isLoading: false
   },
@@ -28,13 +28,16 @@ const initialState: AuthState = {
   }
 };
 // Reducer untuk mengelola state autentikasi
-const authReducer = (state = initialState, action: any) => {
+const authReducer = (
+  state: AuthState = initialState,
+  action: any
+): AuthState => {
   switch (action.type) {
     case types.LOGIN_REQUEST:
       return {
         ...state,
         signIn: {
-          token: undefined,
+          token: null,
           isLoading: true, // Menandakan bahwa proses login sedang berlangsung
           error: null // Menghapus pesan kesalahan
         }
@@ -52,7 +55,7 @@ const authReducer = (state = initialState, action: any) => {
       return {
         ...state,
         signIn: {
-          token: undefined,
+          token: null,
           error: action.payload, // Menyimpan pesan kesalahan saat login gagal
           isLoading: false // Menandakan bahwa proses login gagal
         }
@@ -91,7 +94,8 @@ const authReducer = (state = initialState, action: any) => {
         ...state,
         signIn: {
           token: null, // Menghapus informasi pengguna saat logout
-          error: null
+          error: null,
+          isLoading: false
         }
       };
     default:

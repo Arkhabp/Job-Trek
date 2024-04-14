@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../../../hook';
 
 import Colors from '../../../constans/colors';
 import Helper from '../../../helpers/helper';
@@ -24,6 +24,7 @@ import {RootStackParamList} from '../../../navigations/types';
 import TextComponent from '../../../components/text';
 import {RootState} from '../../../store';
 import {handleSignup} from '../../../store/redux/action/auth';
+import {useNavigation} from '@react-navigation/native';
 interface StyledInputProps extends TextInputProps {
   formikProps: any;
   formikKey: string;
@@ -52,14 +53,10 @@ const StyledInput: React.FC<StyledInputProps> = ({
     </View>
   );
 };
-
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
-}
-
-const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
-  const dispatch = useDispatch();
-  const state = useSelector((state: RootState) => state?.auth?.signUp);
+const SignUpScreen = () => {
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((state: RootState) => state?.auth?.signUp);
 
   const onSubmit = (values: {
     email: string;
@@ -138,7 +135,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             }}>
             Already have an acoount?{' '}
           </TextComponent>
-          <TouchableOpacity onPress={() => navigate('SignIn')}>
+          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
             <TextComponent
               style={{
                 color: Colors.blue,

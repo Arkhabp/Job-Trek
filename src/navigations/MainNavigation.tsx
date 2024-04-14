@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import HomeScreen from '../screens/onBoarding/homeScreen';
+import HomeScreen from '../screens/onBoarding/HomeScreen';
 import AuthNavigation from './AuthNavigation';
 import TabNavigation from './TabNavigation';
+import DetailApplicationScreen from '../screens/onBoarding/DetailApplication';
 
 const MainNavigation = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -24,11 +25,13 @@ const MainNavigation = () => {
 
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="TabNavigation" component={TabNavigation} />
+    <Stack.Navigator screenOptions={{}}>
+      <Stack.Screen
+        name="TabNavigation"
+        component={TabNavigation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="DetailApp" component={DetailApplicationScreen} />
     </Stack.Navigator>
   );
 };

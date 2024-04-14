@@ -3,9 +3,9 @@ import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useNavigation} from '@react-navigation/native';
 
-import HomeScreen from '../screens/onBoarding/homeScreen';
-import ProfileScreen from '../screens/onBoarding/profileScreen';
-import AddAplicationScreen from '../screens/onBoarding/addApplicationScreen';
+import HomeScreen from '../screens/onBoarding/HomeScreen';
+import ProfileScreen from '../screens/onBoarding/ProfileScreen';
+import AddAplicationScreen from '../screens/onBoarding/AddApplicationScreen';
 import Helper from '../helpers/helper';
 import Colors from '../constans/colors';
 import Icons from '../components/icon';
@@ -17,6 +17,7 @@ import {PaperProvider} from 'react-native-paper';
 type TabNavigationProps = {};
 
 const Tab = createBottomTabNavigator();
+const add = 'add';
 
 const TabNavigation: React.FC<TabNavigationProps> = () => {
   const navigation = useNavigation();

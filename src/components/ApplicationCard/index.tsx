@@ -21,6 +21,7 @@ import statusType from '../../constans/statusType';
 import {Calendar} from 'react-native-calendars';
 import {TextInput} from 'react-native-gesture-handler';
 import DefaultButton from '../Buttons/defaultButton';
+import {useNavigation} from '@react-navigation/native';
 
 // Definisikan tipe data untuk setiap item dalam array data
 interface ApplicationData {
@@ -45,6 +46,7 @@ const ApplicationCard: React.FC<Props> = ({data, onPress}) => {
     new Date().toISOString().split('T')[0],
   );
   const status = statusType;
+  const navigation = useNavigation();
 
   const bottomSheetRefUpdate = useRef<BottomSheetModal>(null);
   const bottomSheetUpdateHandler = () => {
@@ -58,7 +60,8 @@ const ApplicationCard: React.FC<Props> = ({data, onPress}) => {
       <TouchableOpacity
         key={data.id}
         style={{marginTop: 4, marginHorizontal: 2}}
-        activeOpacity={0.8}>
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('DetailApp')}>
         <View style={[styles.container]}>
           <View style={styles.containerStatus}>
             <TextComponent style={styles.TextStatus}>

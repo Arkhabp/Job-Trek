@@ -4,17 +4,15 @@ import {
   View,
   SafeAreaView,
   StyleSheet,
-  Touchable,
   TouchableOpacity,
   TextInput,
   Pressable,
   Keyboard,
   ScrollView,
-  FlatList,
-  Dimensions,
   Image,
   Animated,
   Platform,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -40,7 +38,7 @@ interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
 }
 
-const HEADER_HEIGHT = 75;
+const HEADER_HEIGHT = Dimensions.get('window').height * 0.1;
 
 const HomeScreen: React.FC<Props> = ({
   navigation: {navigate, reset, replace},
