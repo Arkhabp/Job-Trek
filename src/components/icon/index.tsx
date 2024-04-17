@@ -10,6 +10,9 @@ import {
   faBriefcase,
   faSearch,
   faFilter,
+  faArchive,
+  faAngleRight,
+  faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 
 interface IconsProps {
@@ -22,7 +25,10 @@ interface IconsProps {
     | 'Profile'
     | 'Plus'
     | 'Search'
-    | 'Filter';
+    | 'Filter'
+    | 'Archive'
+    | 'AngleRight'
+    | 'Edit';
   size?: number;
   color?: string;
 }
@@ -47,6 +53,15 @@ const Icons: React.FC<IconsProps> = ({name, size = 24, color = 'black'}) => {
       break;
     case 'Filter':
       icon = faFilter;
+      break;
+    case 'Archive':
+      icon = faArchive;
+      break;
+    case 'AngleRight':
+      icon = faAngleRight;
+      break;
+    case 'Edit':
+      icon = faPenToSquare;
       break;
     default:
       break;

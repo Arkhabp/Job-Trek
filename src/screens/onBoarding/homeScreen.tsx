@@ -33,6 +33,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useBottomSheetBackHandler} from '../../components/BottomSheet/BackHandler';
 import status from '../../constans/statusType';
 import statusType from '../../constans/statusType';
+import {fonts} from '../../helpers/fonst';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
@@ -48,6 +49,7 @@ const HomeScreen: React.FC<Props> = ({
   const [selectedStatus, setSelectedStatus] = useState<number | null>(0); // State untuk melacak item status yang dipilih
   const industry = industryType;
   const status = statusType;
+
   const dispatch = useDispatch();
 
   const dataApplication = useSelector(
@@ -132,10 +134,8 @@ const HomeScreen: React.FC<Props> = ({
             </View>
           </View>
 
-          <View style={{gap: 10, paddingHorizontal: 12}}>
-            <TextComponent
-              style={[styles.greating, {fontFamily: 'Poppins-SemiBold'}]}
-              numberOfLines={1}>
+          <View style={{gap: 8, paddingHorizontal: 12}}>
+            <TextComponent style={styles.greating} numberOfLines={1}>
               Hi {name}
             </TextComponent>
 
@@ -171,7 +171,11 @@ const HomeScreen: React.FC<Props> = ({
                   size={Helper.normalize(16)}
                   color={Colors.black}
                 />
-                <TextComponent style={{fontSize: Helper.fontSize(14)}}>
+                <TextComponent
+                  style={{
+                    fontSize: Helper.fontSize(14),
+                    fontFamily: fonts.Regular,
+                  }}>
                   Filter
                 </TextComponent>
               </View>
@@ -188,26 +192,29 @@ const HomeScreen: React.FC<Props> = ({
                   onPress={() => setSelectedIndustry(item.id)}>
                   <View
                     style={{
-                      borderWidth: 1,
+                      borderWidth: selectedIndustry === item.id ? 1.2 : 1,
                       borderColor:
                         selectedIndustry === item.id
                           ? Colors.blue
                           : Colors.grey,
                       borderRadius: 16,
                       paddingHorizontal: 8,
-                      paddingVertical: 4,
+                      paddingVertical: 2,
                       alignItems: 'center',
                       marginRight: 4,
                     }}>
                     <TextComponent
                       style={{
-                        fontSize: Helper.fontSize(14),
+                        fontSize: Helper.fontSize(13),
                         color:
                           selectedIndustry === item.id
                             ? Colors.blue
                             : Colors.grey,
-                        fontWeight:
-                          selectedIndustry === item.id ? '900' : '700',
+                        fontFamily:
+                          selectedIndustry === item.id
+                            ? fonts.SemiBold
+                            : fonts.Regular,
+                        marginTop: 2,
                       }}>
                       {item.name}
                     </TextComponent>
@@ -240,7 +247,7 @@ const HomeScreen: React.FC<Props> = ({
           contentContainerStyle={
             Platform.OS === 'android'
               ? {
-                  paddingTop: 190,
+                  paddingTop: HEADER_HEIGHT * 3 - 75,
                   flexGrow: 1,
                   alignItems: 'center',
                   backgroundColor: Colors.lightgrey,
@@ -331,7 +338,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  initialText: {fontWeight: 'bold', color: Colors.white},
+  initialText: {
+    fontFamily: fonts.Medium,
+    color: Colors.white,
+    fontSize: 16,
+    marginTop: 2,
+  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
@@ -345,6 +357,7 @@ const styles = StyleSheet.create({
   greating: {
     fontSize: Helper.fontSize(16),
     width: '60%',
+    fontFamily: fonts.SemiBold,
   },
   textInput: {
     borderWidth: 1,

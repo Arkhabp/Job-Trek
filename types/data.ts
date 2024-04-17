@@ -14,10 +14,17 @@ export interface AuthState {
 export interface ApplicationData {
   id: number;
   status: string;
+  statusId: number;
   companyName: string;
   position: string;
   employmentType: string;
   portal: string;
   offering: string;
   progressDate: string;
+}
+
+export interface UpdateApplicationData {
+  calendarDate: string;
+  progress: string;
+  selectedStatus: string;
 }

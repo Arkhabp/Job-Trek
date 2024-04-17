@@ -14,10 +14,7 @@ const TextComponent: React.FC<TextComponentProps> = ({
 }) => {
   return (
     <RNText
-      style={[
-        {fontFamily: fonts.Regular, color: Colors.black, fontWeight: '600'},
-        style,
-      ]}
+      style={[{fontFamily: fonts.Regular, color: Colors.black}, style]}
       {...rest}>
       {children}
     </RNText>

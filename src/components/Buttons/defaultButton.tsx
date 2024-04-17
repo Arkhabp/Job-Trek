@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import Colors from '../../constans/colors';
 import Helper from '../../helpers/helper';
 import TextComponent from '../text';
+import {fonts} from '../../helpers/fonst';
 
 interface DefaultButtonProps extends TouchableOpacityProps {
   color?:
@@ -75,8 +76,6 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
     textColor = txtColor || Colors.red;
   }
 
-  const isvalidCom = React.isValidElement(children);
-
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -86,11 +85,11 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
         {
           paddingVertical:
             size === 'small'
-              ? Helper.normalize(8)
+              ? 8
               : size === 'medium'
-              ? Helper.normalize(10)
+              ? 10
               : size === 'large'
-              ? Helper.normalize(16)
+              ? 16
               : 12,
           paddingHorizontal: size === 'small' ? 16 : size === 'large' ? 24 : 20,
           borderRadius: borderRadius || 10,
@@ -104,8 +103,9 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
       <TextComponent
         style={{
           color: type === 'solid' ? textColor : Colors.blue,
-          fontSize: fontSize,
-          fontWeight: '700',
+          fontSize: size === 'small' ? 11 : size === 'large' ? 18 : 16,
+          fontFamily: fonts.SemiBold,
+          marginTop: 2,
         }}>
         {children}
       </TextComponent>

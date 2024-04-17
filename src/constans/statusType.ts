@@ -9,7 +9,7 @@ const statusType = [
   },
   {
     id: 2,
-    name: "Fail"
+    name: "Failed"
   },
   {
     id: 3,

@@ -25,34 +25,9 @@ import TextComponent from '../../../components/text';
 import {RootState} from '../../../store';
 import {handleSignup} from '../../../store/redux/action/auth';
 import {useNavigation} from '@react-navigation/native';
-interface StyledInputProps extends TextInputProps {
-  formikProps: any;
-  formikKey: string;
-  placeholder: string;
-}
+import {fonts} from '../../../helpers/fonst';
+import StyledInput from '../../../components/TextInput';
 
-const StyledInput: React.FC<StyledInputProps> = ({
-  formikProps,
-  formikKey,
-  placeholder,
-  ...rest
-}) => {
-  return (
-    <View style={{marginBottom: 2}}>
-      <TextInput
-        placeholder={placeholder}
-        style={styles.TextInput}
-        onChangeText={text => formikProps.handleChange(formikKey)(text)}
-        onBlur={() => formikProps.handleBlur(formikKey)}
-        placeholderTextColor={Colors.grey}
-        {...rest}
-      />
-      <TextComponent style={{color: Colors.red, fontSize: Helper.fontSize(12)}}>
-        {formikProps.touched[formikKey] && formikProps.errors[formikKey]}
-      </TextComponent>
-    </View>
-  );
-};
 const SignUpScreen = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
@@ -110,7 +85,6 @@ const SignUpScreen = () => {
                     textColor={Colors.white}
                     onPress={() => formikProps.handleSubmit()}
                     size="medium"
-                    fontSize={Helper.fontSize(16)}
                     borderRadius={Helper.normalize(6)}
                     minWidth={150}>
                     Sign Up
@@ -160,12 +134,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Helper.fontSize(40),
-    fontWeight: '700',
     color: Colors.blue,
+    fontFamily: fonts.SemiBold,
+    marginBottom: -12,
   },
   greating: {
     fontSize: Helper.fontSize(14),
-    fontWeight: '500',
+    fontFamily: fonts.Regular,
     color: Colors.blue,
   },
   TextInput: {

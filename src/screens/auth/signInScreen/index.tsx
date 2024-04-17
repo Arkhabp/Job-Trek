@@ -22,39 +22,12 @@ import {RootState} from '../../../store';
 import Colors from '../../../constans/colors';
 import Helper from '../../../helpers/helper';
 import TextComponent from '../../../components/text';
+import StyledInput from '../../../components/TextInput';
 
 import validationSignInSchema from './validation';
 import DefaultButton from '../../../components/Buttons/defaultButton';
 import {useNavigation} from '@react-navigation/native';
-
-interface StyledInputProps extends TextInputProps {
-  formikProps: any;
-  formikKey: string;
-  placeholder: string;
-}
-
-const StyledInput: React.FC<StyledInputProps> = ({
-  formikProps,
-  formikKey,
-  placeholder,
-  ...rest
-}) => {
-  return (
-    <View style={{marginBottom: 2}}>
-      <TextInput
-        placeholder={placeholder}
-        style={styles.TextInput}
-        onChangeText={text => formikProps.handleChange(formikKey)(text)}
-        onBlur={() => formikProps.handleBlur(formikKey)}
-        placeholderTextColor={Colors.grey}
-        {...rest}
-      />
-      <TextComponent style={{color: Colors.red, fontSize: Helper.fontSize(12)}}>
-        {formikProps.touched[formikKey] && formikProps.errors[formikKey]}
-      </TextComponent>
-    </View>
-  );
-};
+import {fonts} from '../../../helpers/fonst';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -105,7 +78,6 @@ const SignInScreen = () => {
                     textColor={Colors.white}
                     onPress={() => formikProps.handleSubmit()}
                     size="medium"
-                    fontSize={Helper.fontSize(16)}
                     borderRadius={Helper.normalize(6)}
                     minWidth={150}>
                     Sign In
@@ -126,7 +98,7 @@ const SignInScreen = () => {
             style={{
               color: Colors.blue,
               fontSize: Helper.fontSize(12),
-              fontWeight: '600',
+              fontFamily: fonts.Regular,
             }}>
             Don't have an account?{' '}
           </TextComponent>
@@ -135,7 +107,7 @@ const SignInScreen = () => {
               style={{
                 color: Colors.blue,
                 fontSize: Helper.fontSize(12),
-                fontWeight: '700',
+                fontFamily: fonts.SemiBold,
               }}>
               Sign Up
             </TextComponent>
@@ -155,12 +127,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Helper.fontSize(40),
-    fontWeight: '700',
+    fontFamily: fonts.SemiBold,
     color: Colors.blue,
+    marginBottom: -6,
   },
   greating: {
     fontSize: Helper.fontSize(14),
-    fontWeight: '500',
+    fontFamily: fonts.Regular,
     color: Colors.blue,
   },
   TextInput: {

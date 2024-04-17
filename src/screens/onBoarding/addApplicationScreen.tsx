@@ -14,7 +14,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {handleSignOut} from '../../store/redux/action/auth';
 
 import {RootStackParamList} from '../../navigations/types';
-import {useDispatch} from 'react-redux';
+import {useAppSelector} from '../../../hook';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store';
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
@@ -23,11 +25,14 @@ interface Props {
 const AddAplicationScreen: React.FC<Props> = ({
   navigation: {navigate, reset, replace},
 }) => {
-  const dispatch = useDispatch();
+  const updateData = useAppSelector(
+    (state: RootState) => state?.application?.updateApplication.data,
+  );
 
+  console.log('DATA SELECTOR', updateData);
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Add Application Screen</Text>
+      <Text>asdas</Text>
     </SafeAreaView>
   );
 };

@@ -13,7 +13,6 @@ import { applyMiddleware, combineReducers } from "redux";
 
 import authReducer from "./redux/reducers/auth.reducer";
 import applicationReducer from "./redux/reducers/application.reducer";
-import bottomSheetReducer from "./redux/reducers/bottomSheet.reducer";
 import { thunk } from "redux-thunk";
 
 const persistConfig = {
@@ -27,8 +26,7 @@ const persisedtReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persisedtReducer,
-    application: applicationReducer,
-    bottomSheet: bottomSheetReducer
+    application: applicationReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,11 +1,9 @@
 import auth from "@react-native-firebase/auth";
 import { types } from "../../../constans/auth.constan";
-import { ToastAndroid, Alert } from "react-native";
+import { ToastAndroid, Alert, Keyboard } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { AppDispatch } from "../../../store";
 import * as Burnt from "burnt";
-import { Dispatch } from "redux";
-import { LogoutAction } from "../../../../types/auth.types";
 
 // const dispatch = useDispatch();
 export function handleLogin(email: string, password: any) {
@@ -19,12 +17,14 @@ export function handleLogin(email: string, password: any) {
       const user = userCredential.user;
       const token = await user.getIdToken();
 
+      Keyboard.dismiss();
       // Check if the user's email is verified
       if (!userCredential.user?.emailVerified) {
         dispatch({
           type: types.LOGIN_FAILED,
           payload: "Email is not verified"
         });
+
         Alert.alert("Please verify your email before logging in!");
         return;
       }
@@ -104,7 +104,7 @@ export const handleSignup = (email: string, password: string, name: string) => {
 };
 
 export function handleSignOut() {
-  return async (dispatch: Dispatch<LogoutAction>) => {
+  return async (dispatch: any) => {
     try {
       await auth().signOut();
       await AsyncStorage.clear();
