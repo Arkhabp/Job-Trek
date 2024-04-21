@@ -13,22 +13,14 @@ import {
   faArchive,
   faAngleRight,
   faPenToSquare,
+  faTrashCan,
+  faXmark,
+  faFloppyDisk,
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 interface IconsProps {
-  name:
-    | 'facebook'
-    | 'instagram'
-    | 'twitter'
-    | 'linkedin'
-    | 'Home'
-    | 'Profile'
-    | 'Plus'
-    | 'Search'
-    | 'Filter'
-    | 'Archive'
-    | 'AngleRight'
-    | 'Edit';
+  name?: string;
   size?: number;
   color?: string;
 }
@@ -62,6 +54,18 @@ const Icons: React.FC<IconsProps> = ({name, size = 24, color = 'black'}) => {
       break;
     case 'Edit':
       icon = faPenToSquare;
+      break;
+    case 'Delete':
+      icon = faTrashCan;
+      break;
+    case 'Cancel':
+      icon = faXmark;
+      break;
+    case 'Save':
+      icon = faFloppyDisk;
+      break;
+    case 'ArrowLeft':
+      icon = faArrowLeft;
       break;
     default:
       break;

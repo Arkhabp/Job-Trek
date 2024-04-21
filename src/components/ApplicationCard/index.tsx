@@ -6,18 +6,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
-  ToastAndroid,
 } from 'react-native';
 
 import Colors from '../../constans/colors';
 import TextComponent from '../text';
 import Helper from '../../helpers/helper';
 import CustomBottomSheetModal from '../BottomSheet/customBottomSheet';
-import {
-  BottomSheetModal,
-  BottomSheetScrollView,
-  BottomSheetTextInput,
-} from '@gorhom/bottom-sheet';
+import {BottomSheetModal, BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useBottomSheetBackHandler} from '../BottomSheet/BackHandler';
 import statusType from '../../constans/statusType';
 import {Calendar} from 'react-native-calendars';
@@ -63,6 +58,8 @@ const ApplicationCard: React.FC<Props> = ({data, onPress}) => {
 
   const bottomSheetRefUpdate = useRef<BottomSheetModal>(null);
   const bottomSheetUpdateHandler = () => {
+    setSelected(new Date().toISOString().split('T')[0]);
+    setSelectedStatus(data.statusId);
     return bottomSheetRefUpdate.current?.present();
   };
   const {handleSheetPositionChange} =
@@ -78,7 +75,7 @@ const ApplicationCard: React.FC<Props> = ({data, onPress}) => {
         key={data.id}
         style={{marginTop: 4, marginHorizontal: 2}}
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('DetailApp')}>
+        onPress={() => navigation.navigate('DetailApp', {AppId: data.id})}>
         <View
           style={[
             styles.container,
@@ -129,11 +126,7 @@ const ApplicationCard: React.FC<Props> = ({data, onPress}) => {
       <CustomBottomSheetModal
         ref={bottomSheetRefUpdate}
         snapPoints={['45%', '80%']}
-        onchange={() => {
-          handleSheetPositionChange(0);
-          setSelected(new Date().toISOString().split('T')[0]);
-          setSelectedStatus(data.statusId);
-        }}
+        onchange={handleSheetPositionChange}
         title="Update">
         <BottomSheetScrollView showsVerticalScrollIndicator={false}>
           <KeyboardAvoidingView

@@ -17,7 +17,6 @@ import {PaperProvider} from 'react-native-paper';
 type TabNavigationProps = {};
 
 const Tab = createBottomTabNavigator();
-const add = 'add';
 
 const TabNavigation: React.FC<TabNavigationProps> = () => {
   const navigation = useNavigation();

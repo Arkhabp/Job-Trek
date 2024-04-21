@@ -1,34 +1,51 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import HomeScreen from '../screens/onBoarding/HomeScreen';
-import AuthNavigation from './AuthNavigation';
 import TabNavigation from './TabNavigation';
 import DetailApplicationScreen from '../screens/onBoarding/DetailApplication';
-import {fonts} from '../helpers/fonst';
-import {Alert, Button, Touchable} from 'react-native';
+import {Alert} from 'react-native';
 import Icons from '../components/icon';
 import Colors from '../constans/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useAppDispatch, useAppSelector} from '../../hook';
+import {RootState} from '../store';
+import {types} from '../constans/editApplication.constan';
+import {useNavigation} from '@react-navigation/native';
+import IndustryScreen from '../screens/onBoarding/IndustryScreen';
+import {fonts} from '../helpers/fonst';
 
 const MainNavigation = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const navigation = useNavigation();
+  const Stack = createNativeStackNavigator();
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    checkLoginStatus();
-  }, []);
+  const dataApplication = useAppSelector(
+    (state: RootState) => state?.editApplication.data,
+  );
 
-  const checkLoginStatus = async () => {
-    try {
-      const userToken = await AsyncStorage.getItem('USER_TOKEN');
-      setIsLogin(!!userToken); // Set isLogin menjadi true jika userToken ada, false jika tidak
-    } catch (error) {
-      console.error('Error checking login status:', error);
-    }
+  const BackIcon = ({onPress}: {onPress?: () => void}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.goBack();
+          onPress && onPress();
+        }}
+        style={{marginRight: 18}}
+        activeOpacity={0.8}>
+        <Icons name={'ArrowLeft'} color={Colors.black} size={20} />
+      </TouchableOpacity>
+    );
   };
 
-  const Stack = createNativeStackNavigator();
+  function handleEdit() {
+    if (dataApplication) {
+      dispatch({type: types.ON_FOUCUS_STATE_FALSE});
+    } else {
+      Alert.alert('Want to Archive');
+    }
+  }
+  function handleBackEdit() {
+    dispatch({type: types.ON_FOUCUS_STATE_FALSE});
+  }
   return (
     <Stack.Navigator screenOptions={{headerShadowVisible: false}}>
       <Stack.Screen
@@ -41,15 +58,24 @@ const MainNavigation = () => {
         component={DetailApplicationScreen}
         options={{
           title: 'Detail',
-          // headerTitleStyle: {fontFamily: fonts.SemiBold},
-          statusBarStyle: 'dark',
+          headerLeft: () => <BackIcon onPress={handleBackEdit} />,
           headerRight: () => (
-            <TouchableOpacity
-              onPress={() => Alert.alert('Archive')}
-              activeOpacity={0.8}>
-              <Icons name="Archive" color={Colors.blue} size={20} />
+            <TouchableOpacity onPress={() => handleEdit()} activeOpacity={0.8}>
+              <Icons
+                name={dataApplication ? 'Cancel' : 'Archive'}
+                color={Colors.blue}
+                size={20}
+              />
             </TouchableOpacity>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="Industry"
+        component={IndustryScreen}
+        options={{
+          title: 'Industry',
+          headerLeft: () => <BackIcon />,
         }}
       />
     </Stack.Navigator>

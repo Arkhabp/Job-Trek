@@ -28,7 +28,9 @@ const initialState: ApplicationState = {
         employmentType: "Full Time",
         portal: "Linked In",
         offering: "Offering",
-        progressDate: "06-02-2024"
+        progressDate: "06-02-2024",
+        industry: "Technology",
+        note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
       },
       {
         id: 2,
@@ -39,7 +41,9 @@ const initialState: ApplicationState = {
         employmentType: "Part Time",
         portal: "LinkedIn",
         offering: "Offering",
-        progressDate: "10-03-2024"
+        progressDate: "10-03-2024",
+        industry: "Retail",
+        note: ""
       },
       {
         id: 3,
@@ -50,7 +54,9 @@ const initialState: ApplicationState = {
         employmentType: "Contract",
         portal: "GitHub",
         offering: "Offering",
-        progressDate: "15-05-2024"
+        progressDate: "15-05-2024",
+        industry: "Hospitality",
+        note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
       },
       {
         id: 4,
@@ -61,7 +67,9 @@ const initialState: ApplicationState = {
         employmentType: "Full Time",
         portal: "Indeed",
         offering: "Offering",
-        progressDate: "20-07-2024"
+        progressDate: "20-07-2024",
+        industry: "Transportation",
+        note: ""
       },
       {
         id: 5,
@@ -72,7 +80,9 @@ const initialState: ApplicationState = {
         employmentType: "Freelance",
         portal: "Dribbble",
         offering: "Offering",
-        progressDate: "25-09-2024"
+        progressDate: "25-09-2024",
+        industry: "Entertainment",
+        note: ""
       },
       {
         id: 6,
@@ -83,7 +93,9 @@ const initialState: ApplicationState = {
         employmentType: "Internship",
         portal: "LinkedIn",
         offering: "Offering",
-        progressDate: "30-10-2024"
+        progressDate: "30-10-2024",
+        industry: "Manufacturing",
+        note: ""
       },
       {
         id: 7,
@@ -94,7 +106,9 @@ const initialState: ApplicationState = {
         employmentType: "Full Time",
         portal: "GitHub",
         offering: "Offering",
-        progressDate: "02-12-2024"
+        progressDate: "02-12-2024",
+        industry: "Healthcare",
+        note: ""
       },
       {
         id: 8,
@@ -105,7 +119,9 @@ const initialState: ApplicationState = {
         employmentType: "Contract",
         portal: "Indeed",
         offering: "Offering",
-        progressDate: "02-12-2024"
+        progressDate: "02-12-2024",
+        industry: "Hospitality",
+        note: ""
       },
       {
         id: 9,
@@ -116,7 +132,9 @@ const initialState: ApplicationState = {
         employmentType: "Full Time",
         portal: "LinkedIn",
         offering: "Offering",
-        progressDate: "02-14-2024"
+        progressDate: "02-14-2024",
+        industry: "Energy",
+        note: ""
       },
       {
         id: 10,
@@ -127,7 +145,9 @@ const initialState: ApplicationState = {
         employmentType: "Freelance",
         portal: "Indeed",
         offering: "Offering",
-        progressDate: "02-12-2025"
+        progressDate: "02-12-2025",
+        industry: "Energy",
+        note: ""
       }
     ],
     error: null,

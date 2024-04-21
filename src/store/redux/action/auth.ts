@@ -2,10 +2,8 @@ import auth from "@react-native-firebase/auth";
 import { types } from "../../../constans/auth.constan";
 import { ToastAndroid, Alert, Keyboard } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { AppDispatch } from "../../../store";
 import * as Burnt from "burnt";
 
-// const dispatch = useDispatch();
 export function handleLogin(email: string, password: any) {
   return async (dispatch: any) => {
     try {

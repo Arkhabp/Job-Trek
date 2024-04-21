@@ -13,7 +13,8 @@ export type RootStackParamList = {
   HomeScreen: undefined;
   AuthNavigation: undefined;
   MainNavigation: undefined;
-  DetailApp: undefined;
+  DetailApp: {AppId: number};
+  Industry: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

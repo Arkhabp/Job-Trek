@@ -7,6 +7,7 @@ import {
   Touchable,
   TouchableOpacity,
   Button,
+  TextInput,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Portal} from 'react-native-paper';
@@ -30,10 +31,20 @@ const ProfileScreen: React.FC<Props> = ({
     dispatch(handleSignOut());
   };
 
+  const textInputRef = useRef<TextInput>(null);
+
+  const handleFocusTextInput = () => {
+    // Memanggil metode focus() untuk memberikan fokus ke input teks
+    textInputRef.current.blur();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => onSignout()}>
         <Text>Profile Screen</Text>
+        <TextInput ref={textInputRef} placeholder="Masukkan teks di sini" />
+        {/* Tombol untuk memanggil metode focus */}
+        <Button title="Focus TextInput" onPress={handleFocusTextInput} />
       </TouchableOpacity>
     </SafeAreaView>
   );

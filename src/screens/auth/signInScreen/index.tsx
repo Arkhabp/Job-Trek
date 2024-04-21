@@ -1,22 +1,16 @@
 import React, {Fragment} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   SafeAreaView,
-  TextInput,
-  TextInputProps,
-  Alert,
   ActivityIndicator,
   TouchableOpacity,
   Pressable,
   Keyboard,
 } from 'react-native';
 import {Formik} from 'formik';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useAppDispatch, useAppSelector} from '../../../../hook';
 
-import {RootStackParamList} from '../../../navigations/types';
 import {handleLogin} from '../../../store/redux/action/auth';
 import {RootState} from '../../../store';
 import Colors from '../../../constans/colors';

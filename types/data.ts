@@ -21,6 +21,8 @@ export interface ApplicationData {
   portal: string;
   offering: string;
   progressDate: string;
+  note: string;
+  industry: string;
 }
 
 export interface UpdateApplicationData {

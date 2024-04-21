@@ -13,6 +13,7 @@ import { applyMiddleware, combineReducers } from "redux";
 
 import authReducer from "./redux/reducers/auth.reducer";
 import applicationReducer from "./redux/reducers/application.reducer";
+import editApplicationReducer from "./redux/reducers/editApplication.reducer";
 import { thunk } from "redux-thunk";
 
 const persistConfig = {
@@ -26,7 +27,8 @@ const persisedtReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persisedtReducer,
-    application: applicationReducer
+    application: applicationReducer,
+    editApplication: editApplicationReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
